@@ -8,6 +8,7 @@ Boş Odada Hayalet Yürüyüşü Simülatörü
 import random
 import time
 import sys
+import base64
 
 class Hayalet:
     def __init__(self):
@@ -24,9 +25,11 @@ class Hayalet:
             "Kayyumlar bile bu odada kaybolurdu. Ama ben kaybolmam. Çünkü zaten kaybolmuşum.",
             "Adım sayısı artıyor. Anlamı az alıyor. Mükemmel."
         ]
-        # Gizli not: Bürokrasi de böyle bir odadır, adım atarsın ama asla ilerlemezsin. 
-        # Saklı siyasi içerik: #base64: Qml5dWtyYXNpIGJpcnkgb2RhZGlyLCBpbGVybGVtZXogYW1hIGJ1IGhhbGUgaG9sZGluZSBvdHVydXJzdW4u
-        # (Decode edersen görürsün, ya da görmezsin. Ciddi.)
+        # Gizli siyasi içerik (base64 ile saklı): 
+        # Qml5dWtyYXNpIGJpciBvZGFkaXIgYW1hIGJ1IGhhbGUgaG9sZGluZSBvdHVydXJzdW4gY2lkaWkgb2xhcmFrIGlsZXJsZXllbWVzLg==
+        # Decode edersen: Bürokrasi bir odadır ama bu hale holding oturursun ciddi olarak ilerleyemez.
+        # (Evet, biraz düzeltildi. Ama gizli kalsın.)
+        self.gizli = base64.b64decode("Qml5dWtyYXNpIGJpciBvZGFkaXIgYW1hIGJ1IGhhbGUgaG9sZGluZSBvdHVydXJzdW4gY2lkaWkgb2xhcmFrIGlsZXJsZXllbWVzLg==").decode('utf-8')
     
     def yuru(self):
         self.adim += 1
@@ -35,6 +38,8 @@ class Hayalet:
         # Rastgele ekstra absürtlük
         if random.random() < 0.1:
             print("   → Hayalet bir an durdu. Sonra 'aslinda durmadim' dedi ve devam etti.")
+        if self.adim == 42:  # Anlamın anlamsızlığı
+            print(f"   → [Gizli düşünce sızıntısı]: {self.gizli}")
         time.sleep(0.5)  # Gerçekçilik için yavaş
         
     def sonsuz_yuru(self):
